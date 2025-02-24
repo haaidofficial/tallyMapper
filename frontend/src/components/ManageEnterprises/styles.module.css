@@ -1,0 +1,13 @@
+.tableHeader {
+    background: #5C7285;
+    /* background: #818C78; */
+    color: white;
+}
+
+.evenRow {
+    border: 1px solid blue !important;
+}
+
+.oddRow {
+    border: 1px solid green !important;
+}
