@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post("/addEnterprise", validateAddEnterprise, validationErrorHandler, addEnterprise);
 router.get("/getEnterprises", getEnterprises);
-router.delete("/deleteEnterprise/:id", validateEnterpriseId, validationErrorHandler, deleteEnterprise);
+router.delete("/deleteEnterprise/:enterpriseId", validateEnterpriseId, validationErrorHandler, deleteEnterprise);
 router.put("/updateEnterprise/:id", validateUpdateEnterprise, validationErrorHandler, updateEnterpriseDetail);
 router.post("/addApiEndpoints/:enterpriseId", validateAddApiEndpoints, validationErrorHandler, addApiEndpoints);
 router.post("/addApiEndpointsList", validateApiEndpointsList, validationErrorHandler, addApiEndpointsList);

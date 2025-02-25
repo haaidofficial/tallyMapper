@@ -39,7 +39,7 @@ const validateAddApiEndpoints = [
 ];
 
 const validateEnterpriseId = [
-    param("id").isMongoId().withMessage("Invalid enterprise ID"),
+    param("enterpriseId").isMongoId().withMessage("Invalid enterprise ID"),
 ];
 
 const validateEnterpriseIdOptional = [
