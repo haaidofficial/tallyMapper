@@ -1,12 +1,9 @@
-// import HomePage from "@/components/HomePage";
+import dynamic from "next/dynamic";
 
-const Home = () => {
+const ManageEnterprises = dynamic(() => import("@/components/ManageEnterprises"));
 
-    return (
-        <>
-            {/* <HomePage /> */}
-        </>
-    )
+function Home() {
+    return <ManageEnterprises />;
 }
 
 export default Home;
