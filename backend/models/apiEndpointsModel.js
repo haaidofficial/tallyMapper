@@ -7,3 +7,4 @@ const ApiEndpointSchema = new mongoose.Schema({
 
 const ApiEndpoint = mongoose.model("ApiEndpoints", ApiEndpointSchema);
 module.exports = ApiEndpoint;
+

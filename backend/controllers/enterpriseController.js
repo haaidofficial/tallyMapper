@@ -57,7 +57,7 @@ const getEnterprises = async (req, res) => {
 
 const deleteEnterprise = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { enterpriseId } = req.params;
 
         // Check if enterprise exists
         const enterprise = await Enterprise.findById(id);
