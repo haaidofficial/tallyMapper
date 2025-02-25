@@ -25,8 +25,18 @@ function cleanObject(key = '', targetKeys = [], obj) {
 }
 
 const removeCharactersFromData = (rawData, targetKeys = []) => {
-    const jsonData = safeParseJson(rawData);
-    return cleanObject('', targetKeys, jsonData);
+    const cleanedDataPromise = new Promise((resolve, reject) => {
+        const jsonData = safeParseJson(rawData);
+        const data = cleanObject('', targetKeys, jsonData);
+        if (data) {
+            resolve(data)
+        }
+        else {
+            reject(new Error('Unable to clean data'))
+        }
+
+    });
+    return cleanedDataPromise;
 };
 
 module.exports = {

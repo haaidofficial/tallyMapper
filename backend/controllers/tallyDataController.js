@@ -19,7 +19,7 @@ const getTransformedTallyData = async (req, res) => {
         }
 
         const apiConfig = enterprise?.apiConfigurations?.find(apiConfig => apiConfig?.apiId?._id?.toString() === apiId?.toString());
-        console.log(JSON.stringify(enterprise?.apiConfigurations), 'enterprise');
+        // console.log(JSON.stringify(enterprise?.apiConfigurations), 'enterprise');
         if (!apiConfig) {
             return res.status(400).json({ success: false, message: 'Api Endpoint not found', data: apiConfig });
         }
@@ -46,7 +46,10 @@ const getTransformedTallyData = async (req, res) => {
 
         if (response) {
 
-            const parsedData = removeCharactersFromData(response, targetKeys)
+            const parsedData = await removeCharactersFromData(response, targetKeys);
+
+            // console.log(parsedData, '------------------------final data-------------------------');
+
 
             return res.status(200).json({ success: true, data: parsedData ? parsedData : null });
 

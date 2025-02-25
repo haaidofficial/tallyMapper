@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 const BackButton = () => {
     const router = useRouter();
 
-    if (router.pathname === "/manage-enterprises") {
+    if (router.pathname === "/manage-enterprises" || router.pathname === "/") {
         return null;
     }
 

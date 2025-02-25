@@ -60,13 +60,13 @@ const deleteEnterprise = async (req, res) => {
         const { enterpriseId } = req.params;
 
         // Check if enterprise exists
-        const enterprise = await Enterprise.findById(id);
+        const enterprise = await Enterprise.findById(enterpriseId);
         if (!enterprise) {
             return res.status(404).json({ success: false, message: "Enterprise not found" });
         }
 
         // Delete the enterprise
-        await Enterprise.findByIdAndDelete(id);
+        await Enterprise.findByIdAndDelete(enterpriseId);
 
         res.json({ success: true, message: "Enterprise deleted successfully" });
     } catch (error) {
