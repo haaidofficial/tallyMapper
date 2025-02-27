@@ -1,7 +1,7 @@
+import protectedRoute from "@/components/hoc/protectedRoute";
 import TransformTallyData from "@/components/TransformTallyData";
 
 const transformTallyData = () => {
-
     return (
         <>
             <TransformTallyData />
@@ -9,6 +9,4 @@ const transformTallyData = () => {
     )
 }
 
-
-
-export default transformTallyData;
+export default protectedRoute(transformTallyData);

@@ -1,0 +1,21 @@
+.formContainer {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+@media (max-width: 601px) {
+    .formContainer {
+        padding: 0 10px;
+    }
+
+    .formWrapper {
+        padding: 1rem;
+    }
+
+    .formWrapperHd{
+        margin-bottom: 0px;
+    }
+}

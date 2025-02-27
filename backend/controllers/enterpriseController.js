@@ -2,7 +2,6 @@ const { validationResult, header } = require("express-validator");
 const Enterprise = require("../models/enterpriseModel");
 const ApiEndpoint = require("../models/apiEndpointsModel");
 const { default: mongoose } = require("mongoose");
-const { addTallyReportApi } = require("../services/tallyServices");
 
 // Controller to handle adding an enterprise
 const addEnterprise = async (req, res) => {
@@ -135,13 +134,11 @@ const addApiEndpoints = async (req, res) => {
                 // if new api then add it to db
                 newApi = new ApiEndpoint({ api: apiEndpoint?.url });
                 await newApi.save();
-                console.log(newApi, 'newApi')
             }
 
 
             // check if api is already linked with the enterprise
             const isApiAlreadyLinked = enterprise.apiConfigurations?.some(apiConfig => apiConfig?.apiId?.toString() === existingApi?._id?.toString());
-            console.log(isApiAlreadyLinked, 'isApiLinked');
 
 
             // if api is not linked then link it
@@ -155,7 +152,6 @@ const addApiEndpoints = async (req, res) => {
                 });
 
                 newAddedApiEndpoints.push(apiEndpoint);
-                console.log('api not linked', newAddedApiEndpoints)
 
             }
 
@@ -196,8 +192,6 @@ const addApiEndpointsList = async (req, res) => {
                 newAddedApiEndpoints.push(apiEndpoint);
                 newApi = new ApiEndpoint({ api: apiEndpoint?.api, method: apiEndpoint?.method });
                 await newApi.save();
-                await addTallyReportApi(newApi?._id);
-                console.log(newApi, 'newApi')
             }
             else {
                 existingApiEndpoints.push(apiEndpoint);
@@ -245,9 +239,6 @@ const getEnterpriseApiEndpoints = async (req, res) => {
 
         data.apiEndpoints = apiEndpoints;
 
-
-        console.log(enterprise, 'enterprise');
-
         return res.status(200).json({ status: 200, data })
     } catch (error) {
         console.error("Error fetching API endpoints:", error);
@@ -287,8 +278,6 @@ const deleteEnterpriseApiEndpoint = async (req, res) => {
     try {
         const { enterpriseId } = req.params;
         const { apiId } = req.body;
-
-        console.log(req.body, 'sshafjsfjjsfjs')
 
         const enterprise = await Enterprise.findById(enterpriseId);
 

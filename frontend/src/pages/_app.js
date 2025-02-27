@@ -5,19 +5,13 @@ import { AuthProvider } from "@/context/AuthContext"; // Import the AuthProvider
 import "../styles/globals.css";
 import BackButton from "@/components/BackButton";
 
-const adminPageRoutes = [
-    '/admin/dashboard',
-    '/admin/add-product',
-    '/admin/account-settings',
-    '/admin/edit-product/[productId]',
-    '/admin/enquiries'
-];
 
 export default function App({ Component, pageProps }) {
     const router = useRouter();
 
-    const isAdminPage = adminPageRoutes.includes(router.pathname);
+    const isAdminLoginPage = router.pathname === "/admin/login";
     const is404Page = router.pathname === "/404";
+    console.log(isAdminLoginPage, router, 'isAdminLoginPage');
 
     return (
         <>
@@ -27,8 +21,10 @@ export default function App({ Component, pageProps }) {
                 <Component {...pageProps} />
             ) : (
                 <RootLayout>
-                    {isAdminPage ? (
+                 
+                    {!isAdminLoginPage ? (
                         <AuthProvider>
+                               {console.log(!isAdminLoginPage, 'isAdminLoginPage')}
                             <Component {...pageProps} />
                         </AuthProvider>
                     ) : (

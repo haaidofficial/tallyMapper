@@ -1,4 +1,5 @@
 import EditApiEndpoints from "@/components/EditApiEndpoints";
+import protectedRoute from "@/components/hoc/protectedRoute";
 
 function EditApiPage() {
     return (
@@ -6,4 +7,4 @@ function EditApiPage() {
     )
 }
 
-export default EditApiPage;
+export default protectedRoute(EditApiPage);

@@ -25,7 +25,6 @@ export const AuthProvider = ({ children }) => {
                 handleSessionExpiry();
             }
             else {
-
                 setToken(storedToken);
                 setIsAuthenticated(true);
                 tokenExpiryCheck(storedToken);

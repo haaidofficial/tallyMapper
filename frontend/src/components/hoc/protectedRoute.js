@@ -9,6 +9,7 @@ const protectedRoute = (WrappedComponent) => {
         const router = useRouter();
 
         useEffect(() => {
+            debugger
             if (!loading && (!isAuthenticated || !token)) {
                 router.push("/admin/login");
             }

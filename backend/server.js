@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const enterpriseRoutes = require("./routes/enterpriseRoute");
+const authRoutes = require("./routes/authRoutes");
 require('dotenv').config();
 
 const app = express();
@@ -13,6 +14,7 @@ app.use('/uploads', express.static('uploads')); // Serve static images
 
 // Routes
 app.use("/api", enterpriseRoutes);
+app.use("/api/auth", authRoutes);
 
 // Connect to MongoDB
 mongoose

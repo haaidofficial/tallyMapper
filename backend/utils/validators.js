@@ -137,6 +137,29 @@ const validateGetTransformedTallyData = [
         .withMessage("Request body must be an object"),
 ];
 
+const validateLogin = [
+    body('email')
+        .isEmail().withMessage('Email must be valid')
+        .normalizeEmail(),
+
+    body('password')
+        .notEmpty().withMessage('Password is required')
+        .isLength({ min: 8, max: 16 }).withMessage('Password must be between 8 and 16 characters long')
+        .matches(/[A-Z]/).withMessage('Password must contain at least one uppercase letter')
+        .matches(/[a-z]/).withMessage('Password must contain at least one lowercase letter')
+        .matches(/\d/).withMessage('Password must contain at least one number')
+        .matches(/[@$!%*?&]/).withMessage('Password must contain at least one special character')
+        .trim(), // Removes leading/trailing whitespaces
+];
+
+const validateUpdateAccount = [
+    // Validate and sanitize inputs
+    body('name').optional().isLength({ min: 2 }).withMessage('Name must be at least 2 characters long'),
+    body('email').optional().isEmail().withMessage('Invalid email format'),
+    body('password').optional().isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
+];
+
+
 module.exports = {
     validateAddEnterprise,
     validateAddApiEndpoints,
@@ -148,5 +171,8 @@ module.exports = {
     validateApiEndpointsList,
     validateUpdateEnterpriseApiEndpointHeaders,
     validateEnterpriseIdOptional,
-    validateGetTransformedTallyData
+    validateGetTransformedTallyData,
+    //auth
+    validateLogin,
+    validateUpdateAccount,
 }

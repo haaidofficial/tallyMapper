@@ -1,3 +1,4 @@
+import protectedRoute from "@/components/hoc/protectedRoute";
 import ManageApiEndpoints from "@/components/ManageApiEndpoints";
 
 function ManageApiEndpointsPage() {
@@ -6,4 +7,4 @@ function ManageApiEndpointsPage() {
     )
 }
 
-export default ManageApiEndpointsPage;
+export default protectedRoute(ManageApiEndpointsPage);

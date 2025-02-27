@@ -453,6 +453,14 @@ const EditApiEndpoints = () => {
         }
     };
 
+    const handleDeleteApiHeader = (outerIndex, innerIndex) => {
+        setEndpoints(prevState => {
+            const newEndpoints = [...prevState];
+            newEndpoints[outerIndex].headers.splice(innerIndex, 1)
+            return newEndpoints;
+        })
+    }
+
     const handleHeadersChange = (value, outerIndex, innerIndex = null, inputType) => {
         setEndpoints(prevState =>
             prevState.map((endpoint, i) =>
@@ -596,6 +604,9 @@ const EditApiEndpoints = () => {
                                                                 sx={{ backgroundColor: "#fff", borderRadius: 1 }}
                                                                 onChange={(e) => handleHeadersChange(e.target.value, index, i, 'type')}
                                                             />
+                                                            <IconButton color="error" onClick={() => handleDeleteApiHeader(index, i)}>
+                                                                <DeleteIcon />
+                                                            </IconButton>
                                                         </Box>
                                                     ))
                                                 ) : (
@@ -604,7 +615,7 @@ const EditApiEndpoints = () => {
                                             </AccordionDetails>
                                         </Accordion>
                                     </CardContent>
-                                    <Button sx={{ marginLeft: '15px', marginBottom: '10px' }} variant="contained" onClick={() => updateApiEndpointConfig(endpoint)}>Update</Button>
+                                    <Button sx={{ marginLeft: '15px', marginBottom: '10px' }} variant="contained" onClick={() => updateApiEndpointConfig(endpoint)}>Save</Button>
                                 </Card>
                             ))}
                         </List>

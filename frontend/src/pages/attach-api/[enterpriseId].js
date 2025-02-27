@@ -1,4 +1,5 @@
 import AttachApi from "@/components/AttachApi";
+import protectedRoute from "@/components/hoc/protectedRoute";
 
 const AttachApiPage = () => {
     return (
@@ -6,4 +7,4 @@ const AttachApiPage = () => {
     )
 }
 
-export default AttachApiPage;
+export default protectedRoute(AttachApiPage);
