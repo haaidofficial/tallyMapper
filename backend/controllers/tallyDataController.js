@@ -1,10 +1,7 @@
-const { validationResult, header } = require("express-validator");
 const Enterprise = require("../models/enterpriseModel");
-const ApiEndpoint = require("../models/apiEndpointsModel");
-const { default: mongoose } = require("mongoose");
 const { fetchTallyData } = require("../services/tallyServices");
 const { removeCharactersFromData } = require("../services/parseData");
-
+const { excelData } = require("../services/excelFile");
 
 const getTransformedTallyData = async (req, res) => {
     try {
@@ -12,14 +9,12 @@ const getTransformedTallyData = async (req, res) => {
         const body = req.body;
 
         const enterprise = await Enterprise.findById(enterpriseId).populate('apiConfigurations.apiId').exec();
-
-
         if (!enterprise) {
             return res.status(400).json({ success: false, message: 'Enterprise not found' });
         }
 
         const apiConfig = enterprise?.apiConfigurations?.find(apiConfig => apiConfig?.apiId?._id?.toString() === apiId?.toString());
-    
+
         if (!apiConfig) {
             return res.status(400).json({ success: false, message: 'Api Endpoint not found', data: apiConfig });
         }
@@ -45,10 +40,21 @@ const getTransformedTallyData = async (req, res) => {
         const response = await fetchTallyData(url, method, reportDataApiHeaders, body);
 
         if (response) {
-
             const parsedData = await removeCharactersFromData(response, targetKeys);
-
-            return res.status(200).json({ success: true, data: parsedData ? parsedData : null });
+            if (parsedData?.JsonDataTable) {
+                if (req.query?.type && req.query?.type === 'excel') {
+                    const excelFile = excelData(parsedData?.JsonDataTable, apiConfig?.apiName);
+                    res.setHeader('Content-Disposition', `attachment; filename=data.xlsx`);
+                    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                    return res.status(200).end(excelFile);
+                }
+                else {
+                    return res.status(200).json({ JsonDataTable: parsedData?.JsonDataTable });
+                }
+            }
+            else {
+                return res.status(200).json({ data: parsedData ? parsedData : null });
+            }
 
         }
         res.status(400).json({ success: false, message: 'Unable to fetch data' });
@@ -58,7 +64,6 @@ const getTransformedTallyData = async (req, res) => {
         res.status(500).json({ success: false, message: 'Unable to fetch api' })
     }
 }
-
 
 module.exports = {
     getTransformedTallyData,
