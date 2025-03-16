@@ -43,8 +43,9 @@ const getTransformedTallyData = async (req, res) => {
             const parsedData = await removeCharactersFromData(response, targetKeys);
             if (parsedData?.JsonDataTable) {
                 if (req.query?.type && req.query?.type === 'excel') {
+                    const fileName = `${apiConfig?.apiName || 'data'}_${Date.now()}.xlsx`;
                     const excelFile = excelData(parsedData?.JsonDataTable, apiConfig?.apiName);
-                    res.setHeader('Content-Disposition', `attachment; filename=data.xlsx`);
+                    res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
                     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                     return res.status(200).end(excelFile);
                 }
